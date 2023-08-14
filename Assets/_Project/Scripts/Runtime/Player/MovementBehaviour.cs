@@ -32,10 +32,14 @@ public class MovementBehaviour : MonoBehaviour
         ProcessAim();
     }
     
-    private void OnMouseDown() {
-        if (_isIdle) {
-            _isAiming = true;
+    private void Update() {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_isIdle) {
+                _isAiming = true;
+            }
         }
+        
     }
 
     #endregion

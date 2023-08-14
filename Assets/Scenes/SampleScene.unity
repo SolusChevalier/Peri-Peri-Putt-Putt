@@ -2320,6 +2320,10 @@ PrefabInstance:
       propertyPath: shotPwr
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 4227267427012568943, guid: 66f25c72bf082c24fba7342c3e6bbcac, type: 3}
+      propertyPath: _stopSpd
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6178883413482400900, guid: 66f25c72bf082c24fba7342c3e6bbcac, type: 3}
       propertyPath: m_Radius
       value: 0.5
