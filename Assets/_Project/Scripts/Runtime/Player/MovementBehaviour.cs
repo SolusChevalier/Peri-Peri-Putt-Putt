@@ -6,12 +6,13 @@ using UnityEngine;
 public class MovementBehaviour : MonoBehaviour
 {
     #region FIELDS
-
     public float shotPwr;
     public float _stopSpd;
     public bool _isIdle, _isAiming;
     public LineRenderer _lineRenderer;
     public Rigidbody rigidbody;
+    public float strength;
+    public PlayerDataSO playerDataSO;
     
     #endregion
 
@@ -32,7 +33,7 @@ public class MovementBehaviour : MonoBehaviour
         ProcessAim();
     }
     
-    private void Update() {
+    /*private void Update() {
         if (Input.GetMouseButtonDown(0))
         {
             if (_isIdle) {
@@ -41,6 +42,7 @@ public class MovementBehaviour : MonoBehaviour
         }
         
     }
+    */
 
     #endregion
 
@@ -89,17 +91,20 @@ public class MovementBehaviour : MonoBehaviour
 
         Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
 
-        Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
-        float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
+        Vector3 direction = (transform.position - horizontalWorldPoint).normalized;
+        //float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
 
-        rigidbody.AddForce(direction * strength * shotPwr);
+        rigidbody.AddForce(direction * playerDataSO.GetShotStrength() * shotPwr);
         _isIdle = false;
     }
 
     private void DrawLine(Vector3 worldPoint) {
-        Vector3[] positions = {
+        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
+        Vector3[] positions =
+        {
             transform.position,
-            worldPoint};
+            horizontalWorldPoint
+        };
         _lineRenderer.SetPositions(positions);
         _lineRenderer.enabled = true;
     }
