@@ -2,26 +2,36 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MovementBehaviour : MonoBehaviour
 {
     #region FIELDS
-    public float shotPwr;
-    public float _stopSpd;
+
+    public GameObject ball;
+    private Collider _ballCol;
+    public float shotPwr = 5f;
+    private float _stopSpd = 0.2f;
     public bool _isIdle, _isAiming;
-    public LineRenderer _lineRenderer;
-    public Rigidbody rigidbody;
-    public float strength;
+    public GameObject AimingLine;
+    private LineRenderer _lineRenderer;
+    private Rigidbody rigidbody;
+    private Ray ray;
+    private Camera mainCam;
+    //public float strength;
     public PlayerDataSO playerDataSO;
     
     #endregion
 
     #region UNITYMETHODS
 
-    private void Awake() {
-        rigidbody = GetComponentInChildren<Rigidbody>();
+    private void Awake()
+    {
+        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        rigidbody = ball.GetComponent<Rigidbody>();
+        _ballCol = ball.GetComponent<Collider>();
         _isAiming = false;
-        _lineRenderer = GetComponentInChildren<LineRenderer>();
+        _lineRenderer = AimingLine.GetComponentInChildren<LineRenderer>();
         _lineRenderer.enabled = false;
     }
     
@@ -33,38 +43,32 @@ public class MovementBehaviour : MonoBehaviour
         ProcessAim();
     }
     
-    /*private void Update() {
-        if (Input.GetMouseButtonDown(0))
+    private void Update() {
+        
+        if (Input.GetMouseButton(0))
         {
-            if (_isIdle) {
+            RaycastHit hit;
+            Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition), out hit);
+            if (_isIdle && hit.collider == _ballCol) {
                 _isAiming = true;
             }
         }
         
     }
-    */
+    
 
     #endregion
 
     #region METHODS
     
     private Vector3? CastMouseClickRay() {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNear = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNear);
+        
+        ray = mainCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit, float.PositiveInfinity)) {
+        if (Physics.Raycast(ray, out hit)) {
             return hit.point;
-        } else {
-            return null;
         }
+        return null;
     }
     
     private void ProcessAim() {
@@ -80,29 +84,32 @@ public class MovementBehaviour : MonoBehaviour
 
         DrawLine(worldPoint.Value);
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (!Input.GetMouseButton(0)) {
             Shoot(worldPoint.Value);
         }
     }
     
-    private void Shoot(Vector3 worldPoint) {
+    private void Shoot(Vector3 worldPoint)
+    {
+        Vector3 pos = ball.transform.position;
         _isAiming = false;
         _lineRenderer.enabled = false;
 
-        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
+        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, pos.y, worldPoint.z);
 
-        Vector3 direction = (transform.position - horizontalWorldPoint).normalized;
-        //float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
+        Vector3 direction = (pos - horizontalWorldPoint).normalized;
+        //float strength = Vector3.Distance(pos, horizontalWorldPoint);
 
-        rigidbody.AddForce(direction * playerDataSO.GetShotStrength() * shotPwr);
+        rigidbody.AddForce(direction * (playerDataSO.GetShotStrength() * shotPwr));
         _isIdle = false;
     }
 
-    private void DrawLine(Vector3 worldPoint) {
-        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
+    private void DrawLine(Vector3 worldPoint)
+    {
+        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, ball.transform.position.y, worldPoint.z);
         Vector3[] positions =
         {
-            transform.position,
+            ball.transform.position,
             horizontalWorldPoint
         };
         _lineRenderer.SetPositions(positions);
