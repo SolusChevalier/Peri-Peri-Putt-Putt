@@ -45,6 +45,7 @@ public class Toggling : MonoBehaviour
 
     public void hideBackground()
     {
+        SFXManager.Instance.PlayAudio("Toggle");
         Color c = toggleBackground.color;
         if (toggle.isOn)
         {
