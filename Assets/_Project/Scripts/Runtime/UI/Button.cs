@@ -26,11 +26,11 @@ public class Button : MonoBehaviour
 
     public void onClick() 
     {
-        //SFXManager.Instance.PlayAudio("Click");
+        SFXManager.Instance.PlayAudio("Click");
     }
     public void Hover()
     {
-        //SFXManager.Instance.PlayAudio("Hover");
+        SFXManager.Instance.PlayAudio("Hover");
         image.sprite = hovering;
     }
 
