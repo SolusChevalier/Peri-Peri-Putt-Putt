@@ -32,12 +32,12 @@ public class MenuManager : MonoBehaviour
     #region METHODS
     public void PlayButton()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void loadMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void ShowEnding() 
@@ -88,6 +88,11 @@ public class MenuManager : MonoBehaviour
     public void LoadInstagram() 
     {
         Application.OpenURL("https://www.instagram.com/");
+    }
+
+    public void LoadNandos() 
+    {
+        Application.OpenURL("https://www.nandos.co.za/");
     }
     #endregion
 }
