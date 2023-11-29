@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: Peri-Peri-Putt-Putt
-  defaultCursor: {fileID: 2800000, guid: 75b9547962d825a4a97f3f18716d9c7b, type: 3}
+  defaultCursor: {fileID: 2800000, guid: fa3d48a239a72ab4389e38fbcd72197e, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
