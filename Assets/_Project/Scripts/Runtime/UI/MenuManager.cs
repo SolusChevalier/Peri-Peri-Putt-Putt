@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour
     #region FIELDS
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
+    [SerializeField] private GameObject endPanel;
 
     #endregion
 
@@ -37,6 +38,16 @@ public class MenuManager : MonoBehaviour
     public void loadMainMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void ShowEnding() 
+    {
+        endPanel.SetActive(true);
+    }
+
+    public void HideEnding() 
+    {
+        endPanel.SetActive(true);
     }
 
     public void ShowSettings()
