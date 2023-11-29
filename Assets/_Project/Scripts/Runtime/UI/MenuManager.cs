@@ -63,5 +63,20 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void LoadFacebook() 
+    {
+        Application.OpenURL("https://www.facebook.com/");
+    }
+
+    public void LoadX() 
+    {
+        Application.OpenURL("https://twitter.com/home");
+    }
+
+    public void LoadInstagram() 
+    {
+        Application.OpenURL("https://www.instagram.com/");
+    }
     #endregion
 }
