@@ -13,6 +13,8 @@ public class Toggling : MonoBehaviour
 
     private void Awake()
     {
+        Screen.fullScreen = true;
+        //Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
         toggle = GetComponent<Toggle>();
         Color c = toggleBackground.color;
         c.a = 0;
@@ -48,13 +50,30 @@ public class Toggling : MonoBehaviour
         {
 
             c.a = 0;
-            
+
         }
         else
         {
+
             c.a = 1;
         }
         toggleBackground.color = c;
+        ToggleFullScreen();
+    }
+
+    private void ToggleFullScreen()
+    {
+        //Screen.fullScreen = !Screen.fullScreen;
+        if (Screen.fullScreen)
+        {
+            Screen.SetResolution(1280, 720, false);
+        }
+        else
+        {
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+        }
+
+
     }
 
 }
